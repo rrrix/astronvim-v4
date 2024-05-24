@@ -1,5 +1,4 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
+-- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 -- Customize Treesitter
 
 ---@type LazySpec
@@ -8,9 +7,64 @@ return {
   opts = function(_, opts)
     -- add more things to the ensure_installed table protecting against community packs modifying it
     opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, {
+      "bash",
+      "c",
+      "cpp",
+      "css",
+      "cue",
+      "djot",
+      "git_config",
+      "git_rebase",
+      "gitattributes",
+      "gitcommit",
+      "gitignore",
+      "go",
+      "gomod",
+      "gosum",
+      "gotmpl",
+      "gowork",
+      "graphql",
+      "groovy",
+      "hcl",
+      "hjson",
+      "hocon",
+      "html",
+      "java",
+      "javascript",
+      "jsdoc",
+      "json",
+      "json5",
+      "jsonnet",
+      "kotlin",
       "lua",
+      "luadoc",
+      "make",
+      "markdown",
+      "objc",
+      "promql",
+      "proto",
+      "puppet",
+      "rego",
+      "rst",
+      "ruby",
+      "rust",
+      "scala",
+      "scss",
+      "svelte",
+      "swift",
+      "teal",
+      "terraform",
+      "tmux",
+      "toml",
+      "tsx",
+      "typescript",
+      "typst",
       "vim",
-      -- add more arguments for adding more treesitter parsers
+      "vimdoc",
+      "vue",
+      "xml",
+      "yaml",
     })
+    opts.auto_install = true
   end,
 }
