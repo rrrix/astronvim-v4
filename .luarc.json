@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "workspace.library": [""],
+  "runtime.version": "Lua 5.1",
+  "completion.showWord": "Disable",
+  "diagnostics.globals": ["vim"],
+  "hint.enable": true,
+  "hint.arrayIndex": "Disable",
+  "hover.enable": true,
+
+  "runtime.pathStrict": false,
+
+  "runtime.path": ["?.lua", "?/init.lua"]
+}
