@@ -1,43 +1,20 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
--- You can also add or configure plugins by creating files in this `plugins/` folder
--- Here are some examples:
-
+-- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 ---@type LazySpec
 return {
 
   -- == Examples of Adding Plugins ==
 
-  "andweeb/presence.nvim",
+  -- Discord Rich Presence for Neovim
+  -- "andweeb/presence.nvim",
+
+  -- LSP signature hint as you type
   {
     "ray-x/lsp_signature.nvim",
     event = "BufRead",
     config = function() require("lsp_signature").setup() end,
   },
 
-  -- == Examples of Overriding Plugins ==
-
   -- customize alpha options
-  {
-    "goolord/alpha-nvim",
-    opts = function(_, opts)
-      -- customize the dashboard header
-      opts.section.header.val = {
-        " █████  ███████ ████████ ██████   ██████",
-        "██   ██ ██         ██    ██   ██ ██    ██",
-        "███████ ███████    ██    ██████  ██    ██",
-        "██   ██      ██    ██    ██   ██ ██    ██",
-        "██   ██ ███████    ██    ██   ██  ██████",
-        " ",
-        "    ███    ██ ██    ██ ██ ███    ███",
-        "    ████   ██ ██    ██ ██ ████  ████",
-        "    ██ ██  ██ ██    ██ ██ ██ ████ ██",
-        "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
-        "    ██   ████   ████   ██ ██      ██",
-      }
-      return opts
-    end,
-  },
 
   -- You can disable default plugins as follows:
   { "max397574/better-escape.nvim", enabled = false },
@@ -61,6 +38,16 @@ return {
       local npairs = require "nvim-autopairs"
       local Rule = require "nvim-autopairs.rule"
       local cond = require "nvim-autopairs.conds"
+
+      -- remove add single quote on filetype scheme or lisp
+      npairs.get_rules("'")[1].not_filetypes = { "scheme", "lisp" }
+      npairs.get_rules("'")[1]:with_pair(cond.not_after_text "[")
+
+      -- Disable [] pairs for ANSI escape codes
+      npairs.get_rules("[")[1]:with_pair(cond.not_before_regex("\\e", 2))
+      npairs.get_rules("[")[1]:with_pair(cond.not_after_regex("\\e", 2))
+      npairs.remove_rule "["
+
       npairs.add_rules(
         {
           Rule("$", "$", { "tex", "latex" })
@@ -77,8 +64,9 @@ return {
             -- disable adding a newline when you press <cr>
             :with_cr(cond.none()),
         },
-        -- disable for .vim files, but it work for another filetypes
-        Rule("a", "a", "-vim")
+        -- Disable [] pairs for ANSI escape codes
+        Rule("[", "]"):with_pair(cond.not_after_text "\\e"):with_pair(cond.not_inside_quote()),
+        Rule("$'\\e", "[m'")
       )
     end,
   },
