@@ -5,18 +5,18 @@
 
 local language_packs = {
   "lua",
-  "rust",
-  "go",
-  "python",
-  "html-css",
+  --  "rust",
+  --  "go",
+  -- "python",
+  --  "html-css",
   "helm",
-  "typescript",
+  --  "typescript",
   -- "nix",
   "markdown",
-  "ruby",
-  "tailwindcss",
-  "typst",
-  "vue",
+  --  "ruby",
+  --  "tailwindcss",
+  --  "typst",
+  --  "vue",
   "yaml",
 }
 
