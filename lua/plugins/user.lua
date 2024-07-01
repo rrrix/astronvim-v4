@@ -70,4 +70,17 @@ return {
       )
     end,
   },
+  {
+    "mcauley-penney/tidy.nvim",
+    opts = {
+      enabled_on_save = true,
+      filetype_exclude = { "diff" },
+    },
+    config = function(_, opts)
+      local tidy = require "tidy"
+      tidy.setup(opts)
+      vim.keymap.set("n", "<leader>T", require("tidy").run, { desc = "Strip trailing whitespace (Tidy)" })
+      vim.keymap.set("n", "<leader>uT", require("tidy").toggle, { desc = "Toggle Strip Trailing Whitespace (Tidy)" })
+    end,
+  },
 }
