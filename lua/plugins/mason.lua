@@ -3,6 +3,7 @@
 
 ---@type LazySpec
 return {
+  { "williamboman/mason.nvim", opts = function(_, opts) opts.log_level = vim.log.levels.DEBUG end },
   -- use mason-lspconfig to configure LSP installations
   {
     "williamboman/mason-lspconfig.nvim",
