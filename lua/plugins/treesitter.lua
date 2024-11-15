@@ -12,6 +12,7 @@ return {
       "cpp",
       "css",
       "cue",
+      "diff",
       "djot",
       "git_config",
       "git_rebase",
