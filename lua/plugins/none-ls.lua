@@ -9,24 +9,19 @@ local none_ls_builtins = {
     "hclfmt",
     "isort",
     "nixfmt",
-    "prettier",
     "rubocop",
     "stylua",
     "terraform_fmt",
     "tidy",
     "typstfmt",
-    "yamlfmt",
   },
   diagnostics = {
     "golangci_lint",
-    "pylint",
     "rstcheck",
     "rubocop",
     "saltlint",
     "selene",
     "terraform_validate",
-    "tfsec",
-    "trail_space",
   },
 }
 
@@ -44,6 +39,12 @@ return {
         table.insert(sources, null_ls.builtins[src][name])
       end
     end
+    table.insert(
+      sources,
+      null_ls.builtins.diagnostics.trail_space.with {
+        disabled_filetypes = { "gitcommit", "diff" },
+      }
+    )
     -- Check supported formatters and linters
     -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/formatting
     -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
