@@ -14,14 +14,14 @@ require("lazy").setup({
   { import = "plugins" },
 } --[[@as LazySpec]], {
   -- Configure any other `lazy.nvim` configuration options here
-  concurrency = 1,
+  -- concurrency = 1,
   install = {
     missing = true,
     colorscheme = { "carbonfox", "nightfox", "astrodark", "habamax" },
   },
   checker = {
     enabled = true,
-    concurrency = 1,
+    -- concurrency = 1,
     notify = false,
     frequency = 3600,
   },
