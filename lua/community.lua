@@ -9,15 +9,15 @@ local language_packs = {
   --  "go",
   -- "python",
   --  "html-css",
-  "helm",
+  -- "helm",
   --  "typescript",
   -- "nix",
-  "markdown",
+  -- "markdown",
   --  "ruby",
   --  "tailwindcss",
   --  "typst",
   --  "vue",
-  "yaml",
+  -- "yaml",
 }
 
 local other_community_packages = {
