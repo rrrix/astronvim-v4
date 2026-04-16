@@ -23,13 +23,11 @@ return {
       format_on_save = {
         enabled = false, -- enable or disable format on save globally
         allow_filetypes = { -- enable format on save for specified filetypes only
-          -- "go",
           "lua",
           "go",
           "python",
         },
         ignore_filetypes = { -- disable format on save for specified filetypes
-          -- "python",
           "bash",
           "yaml",
         },
@@ -50,6 +48,34 @@ return {
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
+      lua_ls = {
+        settings = {
+          Lua = {
+            runtime = {
+              path = {
+                'lua/?.lua',
+                'lua/?/init.lua',
+              },
+              version = 'LuaJIT',
+            },
+            hint = {
+              enable = true,
+              arrayIndex = "Disable"
+            },
+            workspace = {
+              library = {
+                "/opt/homebrew/opt/lpeg/lib/lua",
+                "/opt/homebrew/opt/lpeg/share/lua",
+                "/opt/homebrew/opt/lua@5.4/include/lua",
+                "/opt/homebrew/opt/lua/include/lua",
+                "/opt/homebrew/opt/luv/lib/lua",
+                "/opt/homebrew/opt/neovim/share/nvim/runtime/lua",
+                "/opt/homebrew/opt/neovim/share/nvim/runtime/queries/lua",
+              }
+            },
+          },
+        },
+      },
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
       yamlls = {
         settings = {

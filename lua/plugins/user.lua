@@ -18,6 +18,7 @@ return {
 
   -- You can disable default plugins as follows:
   { "max397574/better-escape.nvim", enabled = false },
+  { "kevinhwang91/nvim-ufo", enabled = false },
 
   -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
   {
@@ -115,5 +116,14 @@ return {
     opts = function(_, opts)
       opts.ensure_installed = require("astrocore").list_insert_unique(opts.ensure_installed, { "cuelsp", "cueimports" })
     end,
+  },
+
+  { "spacewander/openresty-vim",
+    VeryLazy = true,
+  },
+  {
+    "yarospace/lua-console.nvim",
+    optional = true,
+    lazy = true,
   },
 }

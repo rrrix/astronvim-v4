@@ -21,7 +21,6 @@ local language_packs = {
 }
 
 local other_community_packages = {
-  "keybinding.nvcheatsheet-nvim",
 }
 
 ---@type LazySpec
