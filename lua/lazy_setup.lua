@@ -22,7 +22,7 @@ require("lazy").setup({
   checker = {
     enabled = true,
     -- concurrency = 1,
-    notify = false,
+    notify = true,
     frequency = 3600,
   },
   ui = { backdrop = 100 },
