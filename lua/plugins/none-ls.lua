@@ -45,6 +45,15 @@ return {
         disabled_filetypes = { "gitcommit", "diff" },
       }
     )
+    -- CUE: prefer `cueimports` (formats and manages imports) when installed via
+    -- `go install`, otherwise fall back to `cue fmt` from the Homebrew `cue` formula.
+    -- mason-null-ls used to register cueimports automatically; with Mason installs
+    -- disabled (see mason.lua) it must be listed explicitly.
+    if vim.fn.executable "cueimports" == 1 then
+      table.insert(sources, null_ls.builtins.formatting.cueimports)
+    else
+      table.insert(sources, null_ls.builtins.formatting.cue_fmt)
+    end
     -- Check supported formatters and linters
     -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/formatting
     -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics

@@ -4,9 +4,8 @@ return {
   "nvim-neo-tree/neo-tree.nvim",
   dependencies = {
     "nvim-lua/plenary.nvim",
-    "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
     "MunifTanjim/nui.nvim",
-    "3rd/image.nvim",              -- Optional image support in preview window: See `# Preview Mode` for more information
+    "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
   },
   opts = function(_, opts)
     -- local defaults = require "neo-tree.defaults"
@@ -17,7 +16,7 @@ return {
       window = {
         mappings = {
           ["P"] = { "toggle_preview", config = { use_float = false, use_image_nvim = true } },
-        }
+        },
       },
       close_if_last_window = true,
       filesystem = {
@@ -29,7 +28,7 @@ return {
           hide_hidden = false,
         },
         follow_current_file = {
-          enabled = true,         -- This will find and focus the file in the active buffer every time
+          enabled = true, -- This will find and focus the file in the active buffer every time
           --                      -- the current file is changed while the tree is open.
           leave_dirs_open = true, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
         },

@@ -2,8 +2,7 @@
 
 -- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
 -- Configuration documentation can be found with `:h astrolsp`
--- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
---       as this provides autocomplete and documentation while editing
+-- NOTE: lua-language-server (Homebrew) provides autocomplete and documentation while editing this config
 
 ---@type LazySpec
 return {
@@ -12,7 +11,6 @@ return {
   opts = {
     -- Configuration table of features provided by AstroLSP
     features = {
-      autoformat = false, -- enable or disable auto formatting on start
       codelens = true, -- enable/disable codelens refresh on start
       inlay_hints = false, -- enable/disable inlay hints on start
       semantic_tokens = true, -- enable/disable semantic token highlighting
@@ -41,11 +39,16 @@ return {
       --   return true
       -- end
     },
-    -- enable servers that you already have installed without mason
+    -- Language servers to enable. All are installed with Homebrew and found on $PATH;
+    -- Mason is not used to install them (see mason.lua).
     servers = {
-      -- "pyright"
+      "cue", -- `cue lsp`, from the `cue` formula
+      "lua_ls", -- lua-language-server
+      "ruff",
+      "yamlls", -- yaml-language-server
     },
-    -- customize language server configuration options passed to `lspconfig`
+    -- customize language server configuration passed to `vim.lsp.config`
+    -- client specific configuration can also go in `lsp/` in the configuration root (see `:h lsp-config`)
     ---@diagnostic disable: missing-fields
     config = {
       lua_ls = {
@@ -53,14 +56,14 @@ return {
           Lua = {
             runtime = {
               path = {
-                'lua/?.lua',
-                'lua/?/init.lua',
+                "lua/?.lua",
+                "lua/?/init.lua",
               },
-              version = 'LuaJIT',
+              version = "LuaJIT",
             },
             hint = {
               enable = true,
-              arrayIndex = "Disable"
+              arrayIndex = "Disable",
             },
             workspace = {
               library = {
@@ -71,7 +74,7 @@ return {
                 "/opt/homebrew/opt/luv/lib/lua",
                 "/opt/homebrew/opt/neovim/share/nvim/runtime/lua",
                 "/opt/homebrew/opt/neovim/share/nvim/runtime/queries/lua",
-              }
+              },
             },
           },
         },
@@ -95,38 +98,14 @@ return {
     },
     -- customize how language servers are attached
     handlers = {
-      -- a function without a key is simply the default handler, functions take two parameters, the server name and the configured options table for that server
-      -- function(server, opts) require("lspconfig")[server].setup(opts) end
+      -- a function with the key `*` modifies the default handler, taking the server name as its parameter
+      -- ["*"] = function(server) vim.lsp.enable(server) end
 
-      -- the key is the server that is being setup with `lspconfig`
+      -- the key is the server that is being setup with `vim.lsp.config`
       -- rust_analyzer = false, -- setting a handler to false will disable the set up of that language server
-      -- pyright = function(_, opts) require("lspconfig").pyright.setup(opts) end -- or a custom handler function can be passed
     },
-    -- Configure buffer local auto commands to add when attaching a language server
-    autocmds = {
-      -- first key is the `augroup` to add the auto commands to (:h augroup)
-      lsp_document_highlight = {
-        -- Optional condition to create/delete auto command group
-        -- can either be a string of a client capability or a function of `fun(client, bufnr): boolean`
-        -- condition will be resolved for each client on each execution and if it ever fails for all clients,
-        -- the auto commands will be deleted for that buffer
-        cond = "textDocument/documentHighlight",
-        -- cond = function(client, bufnr) return client.name == "lua_ls" end,
-        -- list of auto commands to set
-        {
-          -- events to trigger
-          event = { "CursorHold", "CursorHoldI" },
-          -- the rest of the autocmd options (:h nvim_create_autocmd)
-          desc = "Document Highlighting",
-          callback = function() vim.lsp.buf.document_highlight() end,
-        },
-        {
-          event = { "CursorMoved", "CursorMovedI", "BufLeave" },
-          desc = "Document Highlighting Clear",
-          callback = function() vim.lsp.buf.clear_references() end,
-        },
-      },
-    },
+    -- Document-highlight-on-hover is provided by `snacks.words` since AstroNvim v5, so the
+    -- former `lsp_document_highlight` autocmds were removed to avoid duplicate requests.
     -- mappings to be set up on attaching of a language server
     mappings = {
       n = {
@@ -140,12 +119,14 @@ return {
         ["<Leader>uY"] = {
           function() require("astrolsp.toggles").buffer_semantic_tokens() end,
           desc = "Toggle LSP semantic highlight (buffer)",
-          cond = function(client) return client.server_capabilities.semanticTokensProvider and vim.lsp.semantic_tokens end,
+          cond = function(client)
+            return client:supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens ~= nil
+          end,
         },
       },
     },
     -- A custom `on_attach` function to be run after the default `on_attach` function
-    -- takes two parameters `client` and `bufnr`  (`:h lspconfig-setup`)
+    -- takes two parameters `client` and `bufnr`  (`:h lsp-attach`)
     on_attach = function(client, bufnr)
       -- this would disable semanticTokensProvider for all clients
       -- client.server_capabilities.semanticTokensProvider = nil
