@@ -15,7 +15,8 @@ return {
       large_buf = { size = 1024 * 500, lines = 10000 }, -- set global limits for large files for disabling features like treesitter
       autopairs = true, -- enable autopairs at start
       cmp = true, -- enable completion at start
-      diagnostics_mode = 3, -- diagnostic mode on start (0 = off, 1 = no signs/virtual text, 2 = no virtual text, 3 = on)
+      -- diagnostics on start; replaces the removed v4 `diagnostics_mode = 3` ("everything on")
+      diagnostics = { virtual_text = true, virtual_lines = false },
       highlighturl = true, -- highlight URLs at start
       notifications = true, -- enable notifications at start
     },
@@ -64,11 +65,12 @@ return {
         -- this is useful for naming menus
         ["<Leader>b"] = { desc = "Buffers" },
 
-        ["<leader>"] = { name = "Utilities/Plugins" },
-        ["["] = { name = "Previous ..." },
-        ["]"] = { name = "Next ..." },
-        g = { name = "Go ..." },
-        z = { name = "Folds/Spelling ..." },
+        -- which-key group labels: AstroCore registers entries that only have `desc` as groups
+        ["<Leader>"] = { desc = "Utilities/Plugins" },
+        ["["] = { desc = "Previous ..." },
+        ["]"] = { desc = "Next ..." },
+        g = { desc = "Go ..." },
+        z = { desc = "Folds/Spelling ..." },
 
         -- Show Which-Key
         -- ["<C-/>"] = { "<Cmd>WhichKey<CR>", desc = "Show Which-Key (Keymappings)" },

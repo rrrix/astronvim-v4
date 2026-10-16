@@ -38,7 +38,7 @@ return {
     -- vim.notify(vim.inspect(opts))
     -- vim.notify(vim.inspect(user_opts))
 
-    merged_opts = vim.tbl_deep_extend("force", opts, user_opts)
+    local merged_opts = vim.tbl_deep_extend("force", opts, user_opts)
     -- vim.notify(vim.inspect(merged_opts))
     return merged_opts
   end,

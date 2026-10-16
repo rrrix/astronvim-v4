@@ -3,18 +3,20 @@ return {
   opts = {
     options = {
       module_default = false,
+      -- Highlight integrations for plugins actually in use under AstroNvim v6:
+      -- blink.cmp replaced nvim-cmp, mini.icons replaced devicons, and snacks.nvim
+      -- (no nightfox module) replaced telescope, nvim-notify, and alpha.
       modules = {
         aerial = true,
-        cmp = true,
-        ["dap-ui"] = true,
-        dashboard = true,
+        blink = true,
+        dap_ui = true,
         diagnostic = true,
         gitsigns = true,
+        lazy = true,
+        lsp_semantic_tokens = true,
+        mini = true,
         native_lsp = true,
         neotree = true,
-        notify = true,
-        symbol_outline = true,
-        telescope = true,
         treesitter = true,
         whichkey = true,
       },

@@ -84,7 +84,7 @@ return {
     end,
   },
 
-  { "spacewander/openresty-vim", VeryLazy = true },
+  { "spacewander/openresty-vim", event = "VeryLazy" },
   {
     "yarospace/lua-console.nvim",
     optional = true,

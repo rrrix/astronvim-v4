@@ -1,27 +1,23 @@
 -- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
-local termSize = function(term)
+-- Customize toggleterm: size splits relative to the editor instead of fixed rows/columns.
+-- AstroNvim core already provides `on_create` (window-local fold/sign columns and the
+-- <C-'>/<F7> toggle keys), so only `size` is overridden here.
+
+--- Compute terminal size from the current editor dimensions.
+---@param term Terminal
+---@return number size rows for horizontal splits, columns for vertical, 80 otherwise
+local function term_size(term)
   if term.direction == "horizontal" then
-    return vim.o.lines * 0.25
+    return vim.o.lines * 0.25 -- a quarter of the screen height
   elseif term.direction == "vertical" then
-    return vim.o.columns * 0.5
-  else
-    return 80
+    return vim.o.columns * 0.5 -- half of the screen width
   end
+  return 80
 end
+
+---@type LazySpec
 return {
-  {
-    "akinsho/toggleterm.nvim",
-    config = function(_, opts)
-      opts.size = termSize
-      opts.on_create = function(t)
-        vim.opt.foldcolumn = "0"
-        vim.opt.signcolumn = "no"
-        local toggle = function() t:toggle() end
-        vim.keymap.set({ "n", "t", "i" }, "<C-'>", toggle, { desc = "Toggle terminal", buffer = t.bufnr })
-        vim.keymap.set({ "n", "t", "i" }, "<F7>", toggle, { desc = "Toggle terminal", buffer = t.bufnr })
-      end
-      require("toggleterm").setup(opts)
-    end,
-  },
+  "akinsho/toggleterm.nvim",
+  opts = { size = term_size },
 }
