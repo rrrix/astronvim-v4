@@ -20,8 +20,7 @@ local language_packs = {
   -- "yaml",
 }
 
-local other_community_packages = {
-}
+local other_community_packages = {}
 
 ---@type LazySpec
 local community_packages = {
